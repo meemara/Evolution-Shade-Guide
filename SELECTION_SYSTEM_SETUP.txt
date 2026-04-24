@@ -1,0 +1,142 @@
+EVOLUTION SHADE GUIDE - FABRIC SELECTION SYSTEM SETUP
+=====================================================
+
+NEW FILES CREATED
+-----------------
+1. src/context/SelectionContext.jsx - React context managing client, project, rooms, and fabric selections
+2. src/components/SelectionBar.jsx - Floating bottom bar showing selections and rooms
+3. src/components/SelectionReview.jsx - Full-screen modal for reviewing and sending selections
+4. src/data/teamData.js - Evolution team member contact list
+
+UPDATED FILES
+--------------
+1. src/App.jsx - Wrapped with SelectionProvider, added SelectionBar and SelectionReview components
+2. src/components/FabricGallery.jsx - Added "Add to Room" functionality with room selector
+3. src/App.css - Added comprehensive styling for all selection system components
+4. server.js - Added /api/generate-pdf and /api/send-selections endpoints
+5. package.json - Added nodemailer and pdfkit dependencies
+
+INSTALLATION STEPS
+-------------------
+1. Navigate to the project directory:
+   cd /sessions/youthful-focused-hypatia/mnt/Claude-Work/evolution-shade-guide
+
+2. Install new dependencies:
+   npm install
+
+3. Configure environment variables for email (create .env file):
+   SMTP_HOST=smtp.gmail.com (or your email provider)
+   SMTP_PORT=587
+   SMTP_USER=your-email@gmail.com
+   SMTP_PASS=your-app-password
+   SMTP_FROM=Evolution AV <noreply@evolutionava.com>
+
+4. Build the project:
+   npm run build
+
+5. Start the server:
+   npm run start
+
+FEATURES IMPLEMENTED
+--------------------
+
+Selection Management:
+✓ React Context for managing client name, project name, rooms, and fabric selections
+✓ Room creation and management
+✓ Add/remove fabrics from rooms with notes (future enhancement)
+
+Selection Bar (Floating Bottom Panel):
+✓ Collapsed state with "+ Add Selection" button when no selections exist
+✓ Expanded state showing:
+  - Client and project name (click to edit inline)
+  - Rooms list with fabric count badges
+  - "Add Room" input field
+  - Summary stats (rooms count, total fabrics)
+  - "Review & Send" button
+
+Fabric Gallery Enhancement:
+✓ Updated modal with "Add to Room" button
+✓ Room selector dropdown showing existing rooms with fabric counts
+✓ Quick room creation on-the-fly
+✓ Seamless add flow in under 3 clicks
+
+Selection Review Modal:
+✓ Full-screen overlay showing complete selection summary
+✓ Client and project info (editable)
+✓ Rooms with all fabric selections displayed with thumbnails
+✓ Remove individual fabrics or entire rooms
+✓ Team member multi-select checkboxes
+✓ Additional email field for custom recipients
+✓ Download PDF button (generates branded PDF)
+✓ Send Email button (sends HTML email via SMTP)
+✓ Success/error status messaging
+
+PDF Generation:
+✓ Branded header with Evolution logo colors
+✓ Client, project, and date info
+✓ Room-by-room layout with fabric selections
+✓ SKU and light transmission specs per fabric
+✓ Professional formatting suitable for luxury clients
+
+Email Sending:
+✓ HTML formatted email with Evolution branding
+✓ Project details and room-by-room selections
+✓ Team member recipient selection
+✓ Support for additional custom email addresses
+✓ SMTP authentication via environment variables
+
+Styling:
+✓ Dark luxury aesthetic matching Evolution brand (#2D2D2D, #8CC63F)
+✓ Smooth animations and transitions
+✓ Responsive design for mobile/tablet/desktop
+✓ Consistent use of brand colors and typography
+✓ Professional modal overlays and floating bar
+
+TEAM MEMBERS (pre-loaded)
+-------------------------
+- Tony Granberg (Tony@evolutionava.com)
+- Calvin Olson (calvin@evolutionava.com)
+- Alan Nielson (alan@evolutionava.com)
+- Carter Brandstetter (carter@evolutionava.com)
+- Toby Zangenberg (toby@evolutionava.com)
+- Ray Vincent (ray@evolutionava.com)
+- Caleb Gilliam (caleb@evolutionava.com)
+- Mark Meece (mmeece@evolutionava.com)
+- Josh Fontaine (jfontaine@evolutionava.com)
+- Kris Radovich (kradovich@evolutionava.com)
+- Corey Barrows (cbarrows@evolutionava.com)
+- Brant Wivholm (bwivholm@evolutionava.com)
+
+USAGE FLOW
+----------
+1. Client views Shade Guide educational content
+2. Clicks on fabric swatch to see details
+3. Clicks "Add to Room" button in modal
+4. Selects existing room or creates new one
+5. Repeats for all desired fabrics
+6. Selection bar at bottom shows progress
+7. Clicks "Review & Send" to open summary
+8. Edits client/project name if needed
+9. Selects team members to receive selections
+10. Either downloads PDF or sends email
+11. Selection data is retained until page refresh or "Clear All"
+
+NOTES FOR DEPLOYMENT
+--------------------
+- Email delivery requires valid SMTP credentials
+- Gmail users should use app-specific passwords
+- PDF generation happens server-side with pdfkit
+- All selection data is stored in React state (not persisted to database)
+- Session data is lost on page refresh
+- Consider adding localStorage persistence for future enhancement
+
+FUTURE ENHANCEMENTS
+-------------------
+- Add notes field to fabric selections
+- Persist selections to localStorage or database
+- Email template customization
+- PDF swatch image optimization
+- Dark mode toggle
+- Export to Excel/CSV
+- Print from browser
+- Team member response tracking

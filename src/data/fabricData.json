@@ -1,0 +1,888 @@
+{
+  "collections": {
+    "atelier": {
+      "name": "The Atelier Collection",
+      "families": ["Canvas", "Mystic", "Pure", "Shadow"]
+    },
+    "classico": {
+      "name": "The Classico Collection",
+      "subcategories": {
+        "solar_screens": ["E Screen", "E Screen with KOOLBLACK", "M Screen", "T Screen", "T Screen with KOOLBLACK", "GreenScreen Evolve"],
+        "solar_screen": ["Sheerweave 4900", "Basketweave 27", "Basketweave 4000 Eco", "Basketweave 90", "Basketweave 90C", "Basketweave Eco2"],
+        "blackouts": ["Blackout Screen", "Boucle Blackout", "Harbor BO", "Highland BO", "Luna Blackout", "Luna Blackout FR", "Matrice Blackout", "Mirage BO", "Mosaic Blackout", "Palette Blackout", "Roseau Blackout", "Satine Blackout", "Stratus BO", "Stria Blackout"]
+      }
+    },
+    "gallery": {
+      "name": "The Gallery Collection",
+      "subcategories": {
+        "sheer": ["Aura", "SheerLite", "Verso", "Pochoir", "Hue"],
+        "translucent": ["Chroma", "Element", "Element Facade", "Jacquard", "Loop", "Luna", "Premiere", "Bistre", "Boucle Blackout"],
+        "blackout": ["Blackout Screen", "Harbor BO", "Highland BO", "Luna Blackout", "Luna Blackout FR", "Matrice Blackout", "Mirage BO", "Mosaic Blackout", "Palette Blackout", "Roseau Blackout", "Satine Blackout", "Stratus BO", "Stria Blackout"]
+      }
+    },
+    "essentials": {
+      "name": "The Essentials Collection",
+      "subcategories": {
+        "sheer": ["Standard"],
+        "translucent": ["Stratus BO"],
+        "blackout": ["Shadow"]
+      }
+    }
+  },
+  "fabrics": [
+    {
+      "sku": "RF-AUR5-1",
+      "family": "Aura",
+      "color": "Parchment",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-AUR3-1",
+      "family": "Aura",
+      "color": "Parchment",
+      "opacity": "3%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-AURN5-1",
+      "family": "Aura",
+      "color": "Naturelle",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-AURN3-1",
+      "family": "Aura",
+      "color": "Naturelle",
+      "opacity": "3%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-AURR5-1",
+      "family": "Aura",
+      "color": "River Rock",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-AURR3-1",
+      "family": "Aura",
+      "color": "River Rock",
+      "opacity": "3%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-AUST5-1",
+      "family": "Aura",
+      "color": "Tumbleweed",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-AUST3-1",
+      "family": "Aura",
+      "color": "Tumbleweed",
+      "opacity": "3%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-BW27W10-1",
+      "family": "Basketweave 27",
+      "color": "White",
+      "opacity": "10%",
+      "type": "translucent",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW27W5-1",
+      "family": "Basketweave 27",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW27C10-1",
+      "family": "Basketweave 27",
+      "color": "Charcoal",
+      "opacity": "10%",
+      "type": "translucent",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW27C5-1",
+      "family": "Basketweave 27",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW4KEW10-1",
+      "family": "Basketweave 4000 Eco",
+      "color": "White",
+      "opacity": "10%",
+      "type": "translucent",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW4KEW5-1",
+      "family": "Basketweave 4000 Eco",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW4KEC10-1",
+      "family": "Basketweave 4000 Eco",
+      "color": "Charcoal",
+      "opacity": "10%",
+      "type": "translucent",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW4KEC5-1",
+      "family": "Basketweave 4000 Eco",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW90W10-1",
+      "family": "Basketweave 90",
+      "color": "White",
+      "opacity": "10%",
+      "type": "translucent",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW90W5-1",
+      "family": "Basketweave 90",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW90C10-1",
+      "family": "Basketweave 90",
+      "color": "Charcoal",
+      "opacity": "10%",
+      "type": "translucent",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW90C5-1",
+      "family": "Basketweave 90",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW90CW10-1",
+      "family": "Basketweave 90C",
+      "color": "White",
+      "opacity": "10%",
+      "type": "translucent",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW90CW5-1",
+      "family": "Basketweave 90C",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW90CC10-1",
+      "family": "Basketweave 90C",
+      "color": "Charcoal",
+      "opacity": "10%",
+      "type": "translucent",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BW90CC5-1",
+      "family": "Basketweave 90C",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BWECO2W10-1",
+      "family": "Basketweave Eco2",
+      "color": "White",
+      "opacity": "10%",
+      "type": "translucent",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BWECO2W5-1",
+      "family": "Basketweave Eco2",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BWECO2C10-1",
+      "family": "Basketweave Eco2",
+      "color": "Charcoal",
+      "opacity": "10%",
+      "type": "translucent",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BWECO2C5-1",
+      "family": "Basketweave Eco2",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BIS5-1",
+      "family": "Bistre",
+      "color": "Natural",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-BIS15-1",
+      "family": "Bistre",
+      "color": "Natural",
+      "opacity": "15%",
+      "type": "translucent",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-BS0-1",
+      "family": "Blackout Screen",
+      "color": "Pearl",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BSB0-1",
+      "family": "Blackout Screen",
+      "color": "Charcoal",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BOB0-1",
+      "family": "Boucle Blackout",
+      "color": "Pearl",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BOB2-1",
+      "family": "Boucle Blackout",
+      "color": "Pearl",
+      "opacity": "2%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-BOC0-1",
+      "family": "Boucle Blackout",
+      "color": "Charcoal",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-BOC2-1",
+      "family": "Boucle Blackout",
+      "color": "Charcoal",
+      "opacity": "2%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-CNW5-1",
+      "family": "Canvas",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "atelier"
+    },
+    {
+      "sku": "RF-CNC5-1",
+      "family": "Canvas",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "atelier"
+    },
+    {
+      "sku": "RF-CNG5-1",
+      "family": "Canvas",
+      "color": "Gray",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "atelier"
+    },
+    {
+      "sku": "RF-CHW3-1",
+      "family": "Chroma",
+      "color": "White",
+      "opacity": "3%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-CHP3-1",
+      "family": "Chroma",
+      "color": "Pearl",
+      "opacity": "3%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-CHC3-1",
+      "family": "Chroma",
+      "color": "Charcoal",
+      "opacity": "3%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-ES3-1",
+      "family": "E Screen",
+      "color": "White",
+      "opacity": "3%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-ES5-1",
+      "family": "E Screen",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-ESK3-1",
+      "family": "E Screen with KOOLBLACK",
+      "color": "White",
+      "opacity": "3%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-ESK5-1",
+      "family": "E Screen with KOOLBLACK",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-ELW5-1",
+      "family": "Element",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-ELC5-1",
+      "family": "Element",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-ELG5-1",
+      "family": "Element",
+      "color": "Gray",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-EFW5-1",
+      "family": "Element Facade",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-EFC5-1",
+      "family": "Element Facade",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-GRE5-1",
+      "family": "GreenScreen Evolve",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-GREC5-1",
+      "family": "GreenScreen Evolve",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-HBO0-1",
+      "family": "Harbor BO",
+      "color": "Pearl",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-HBC0-1",
+      "family": "Harbor BO",
+      "color": "Charcoal",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-HUE5-1",
+      "family": "Hue",
+      "color": "Sunset",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-HUE10-1",
+      "family": "Hue",
+      "color": "Ocean",
+      "opacity": "10%",
+      "type": "translucent",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-JAW5-1",
+      "family": "Jacquard",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-JAC5-1",
+      "family": "Jacquard",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-LOP5-1",
+      "family": "Loop",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-LOP10-1",
+      "family": "Loop",
+      "color": "White",
+      "opacity": "10%",
+      "type": "translucent",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-LUN5-1",
+      "family": "Luna",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-LUN10-1",
+      "family": "Luna",
+      "color": "White",
+      "opacity": "10%",
+      "type": "translucent",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-LUNB0-1",
+      "family": "Luna Blackout",
+      "color": "Pearl",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-LUNBC0-1",
+      "family": "Luna Blackout",
+      "color": "Charcoal",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-LUNBFR0-1",
+      "family": "Luna Blackout FR",
+      "color": "Pearl",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-LUNBFRC0-1",
+      "family": "Luna Blackout FR",
+      "color": "Charcoal",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-MSW3-1",
+      "family": "M Screen",
+      "color": "White",
+      "opacity": "3%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-MSC3-1",
+      "family": "M Screen",
+      "color": "Charcoal",
+      "opacity": "3%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-MAB0-1",
+      "family": "Matrice Blackout",
+      "color": "Pearl",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-MAC0-1",
+      "family": "Matrice Blackout",
+      "color": "Charcoal",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-MBO0-1",
+      "family": "Mirage BO",
+      "color": "Pearl",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-MBC0-1",
+      "family": "Mirage BO",
+      "color": "Charcoal",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-MOB0-1",
+      "family": "Mosaic Blackout",
+      "color": "Pearl",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-MOC0-1",
+      "family": "Mosaic Blackout",
+      "color": "Charcoal",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-MYS5-1",
+      "family": "Mystic",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "atelier"
+    },
+    {
+      "sku": "RF-MYC5-1",
+      "family": "Mystic",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "atelier"
+    },
+    {
+      "sku": "RF-MYG5-1",
+      "family": "Mystic",
+      "color": "Gray",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "atelier"
+    },
+    {
+      "sku": "RF-PAB0-1",
+      "family": "Palette Blackout",
+      "color": "Pearl",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-PAC0-1",
+      "family": "Palette Blackout",
+      "color": "Charcoal",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-POW5-1",
+      "family": "Pochoir",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-POC5-1",
+      "family": "Pochoir",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-PRW5-1",
+      "family": "Premiere",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-PRC5-1",
+      "family": "Premiere",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-PUR5-1",
+      "family": "Pure",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "atelier"
+    },
+    {
+      "sku": "RF-PUC5-1",
+      "family": "Pure",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "atelier"
+    },
+    {
+      "sku": "RF-ROB0-1",
+      "family": "Roseau Blackout",
+      "color": "Pearl",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-ROC0-1",
+      "family": "Roseau Blackout",
+      "color": "Charcoal",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-SAB0-1",
+      "family": "Satine Blackout",
+      "color": "Pearl",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-SAC0-1",
+      "family": "Satine Blackout",
+      "color": "Charcoal",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-SHA0-1",
+      "family": "Shadow",
+      "color": "Black",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "atelier"
+    },
+    {
+      "sku": "RF-SHL5-1",
+      "family": "SheerLite",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-SW49W5-1",
+      "family": "Sheerweave 4900",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-SW49C5-1",
+      "family": "Sheerweave 4900",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-STD5-1",
+      "family": "Standard",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "essentials"
+    },
+    {
+      "sku": "RF-STR0-1",
+      "family": "Stratus BO",
+      "color": "Gray",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-STB0-1",
+      "family": "Stria Blackout",
+      "color": "Pearl",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-STC0-1",
+      "family": "Stria Blackout",
+      "color": "Charcoal",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-TS3-1",
+      "family": "T Screen",
+      "color": "White",
+      "opacity": "3%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-TS5-1",
+      "family": "T Screen",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-TSK3-1",
+      "family": "T Screen with KOOLBLACK",
+      "color": "White",
+      "opacity": "3%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-TSK5-1",
+      "family": "T Screen with KOOLBLACK",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-VER5-1",
+      "family": "Verso",
+      "color": "White",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-VEC5-1",
+      "family": "Verso",
+      "color": "Charcoal",
+      "opacity": "5%",
+      "type": "sheer",
+      "collection": "gallery"
+    },
+    {
+      "sku": "RF-HIGH0-1",
+      "family": "Highland BO",
+      "color": "Pearl",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    },
+    {
+      "sku": "RF-HIGHC0-1",
+      "family": "Highland BO",
+      "color": "Charcoal",
+      "opacity": "0%",
+      "type": "blackout",
+      "collection": "classico"
+    }
+  ],
+  "metadata": {
+    "totalFabrics": 86,
+    "lastUpdated": "2026-04-24",
+    "source": "Lutron Fabric Filter Page",
+    "note": "This is a processed dataset structure. The actual fabric entries should be populated with complete Lutron catalog data. SKUs and colors are representative examples."
+  }
+}
