@@ -1,4 +1,6 @@
 node_modules
 dist
+dist.bak
 .DS_Store
 .env
+*.timestamp-*.mjs

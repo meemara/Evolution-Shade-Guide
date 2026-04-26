@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelection } from '../context/SelectionContext';
 import { TEAM_MEMBERS } from '../data/teamData';
-import { getThumbnailUrl } from '../data/fabricData';
+import { getFabricImageUrl } from '../data/fabricData';
 
 export default function SelectionReview({ isOpen, onClose }) {
   const { clientName, projectName, rooms, setClientInfo, removeFabricFromRoom, removeRoom } = useSelection();
@@ -188,11 +188,9 @@ export default function SelectionReview({ isOpen, onClose }) {
                           <div key={fabric.id} className="fabric-selection">
                             <div className="fabric-thumbnail-small">
                               <img
-                                src={getThumbnailUrl(fabric.sku)}
-                                alt={`${fabric.family} - ${fabric.color}`}
-                                onError={(e) => {
-                                  e.target.style.backgroundColor = '#E5E5E5';
-                                }}
+                                src={getFabricImageUrl(fabric.sku)}
+                                alt={fabric.family || fabric.name}
+                                onError={(e) => { e.target.style.display = 'none'; }}
                               />
                             </div>
                             <div className="fabric-details">

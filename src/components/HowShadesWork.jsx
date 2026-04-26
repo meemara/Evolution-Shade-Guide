@@ -1,105 +1,45 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 export default function HowShadesWork() {
-  const sectionRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section id="how-shades-work" ref={sectionRef} className={`section how-shades-work ${isVisible ? 'visible' : ''}`}>
+    <section className="section how-shades-work">
       <div className="section-content">
-        <h2 className="section-title">How Motorized Roller Shades Work</h2>
-        <p className="section-subtitle">A modern approach to light control and privacy</p>
+        <div className="split-layout">
+          <div className="split-image">
+            <img
+              src="https://www.lutron.com/us/sites/hub_americas/files/styles/hero_homepage_and_interior_desktop_medium_2x/public/2025-09/b-roll-brooklyn-heights-0423-still-1.jpg"
+              alt="Bedroom with motorized roller shades and city skyline view"
+            />
+          </div>
 
-        <div className="how-shades-grid">
-          <div className="how-shades-text">
+          <div className="split-content">
+            <h2>How Motorized Roller Shades Work</h2>
             <p>
-              Motorized roller shades provide elegant, smooth control of natural light and privacy in any space.
-              The system is simple in concept but refined in execution: a custom-cut fabric shade rolls up and down
-              on a motorized roller tube, allowing you to adjust light levels from complete blackout to bright transparency.
+              Motorized roller shades provide elegant, seamless control of natural light and privacy in any space.
+              A custom-cut fabric rolls smoothly up and down on a motorized tube, allowing you to adjust light
+              levels from complete blackout to bright transparency—all from a remote, app, or voice command.
             </p>
+
             <p>
-              Available with optional dimming capabilities, these shades integrate seamlessly with smart home
-              systems, offering preset positions, scheduling, and voice control. You choose the mounting style,
-              fabric opacity, and finishing details to match your design vision.
+              The system integrates seamlessly with smart home ecosystems, offering preset positions, scheduling,
+              and voice control. You choose the mounting style, fabric opacity, hembar finish, and light-control
+              solutions to match your design vision perfectly.
             </p>
 
             <div className="features-list">
               <div className="feature-item">
-                <div className="feature-icon">📱</div>
-                <div>
-                  <h4>Smart Control</h4>
-                  <p>Control via remote, app, or voice assistant</p>
-                </div>
+                <h4>Smart Control</h4>
+                <p>Remote, app, or voice assistant integration</p>
               </div>
               <div className="feature-item">
-                <div className="feature-icon">⚙️</div>
-                <div>
-                  <h4>Quiet Operation</h4>
-                  <p>Whisper-quiet motors ensure peaceful motion</p>
-                </div>
+                <h4>Whisper Quiet</h4>
+                <p>Virtually silent motorized operation</p>
               </div>
               <div className="feature-item">
-                <div className="feature-icon">🎨</div>
-                <div>
-                  <h4>Infinite Options</h4>
-                  <p>100+ fabrics in multiple opacity levels</p>
-                </div>
+                <h4>Infinite Options</h4>
+                <p>80+ premium fabrics in multiple opacities</p>
               </div>
             </div>
-          </div>
-
-          <div className="shade-diagram">
-            <svg viewBox="0 0 300 400" className="diagram-svg">
-              {/* Frame */}
-              <rect x="40" y="30" width="220" height="340" fill="none" stroke="#2D2D2D" strokeWidth="3" />
-
-              {/* Window glass */}
-              <rect x="50" y="50" width="200" height="200" fill="#E8F4FF" opacity="0.5" stroke="none" />
-
-              {/* Roller mechanism */}
-              <rect x="50" y="45" width="200" height="20" fill="#555" rx="10" />
-              <circle cx="60" cy="55" r="8" fill="#8CC63F" />
-              <circle cx="240" cy="55" r="8" fill="#8CC63F" />
-
-              {/* Shade fabric */}
-              <rect x="55" y="65" width="190" height="120" fill="#F5E6D3" opacity="0.8" />
-
-              {/* Light rays showing through */}
-              <line x1="70" y1="80" x2="50" y2="70" stroke="#FFD700" strokeWidth="2" opacity="0.6" />
-              <line x1="150" y1="80" x2="150" y2="50" stroke="#FFD700" strokeWidth="2" opacity="0.6" />
-              <line x1="230" y1="80" x2="250" y2="70" stroke="#FFD700" strokeWidth="2" opacity="0.6" />
-
-              {/* Cord */}
-              <line x1="245" y1="65" x2="245" y2="290" stroke="#666" strokeWidth="1.5" />
-              <circle cx="245" cy="290" r="4" fill="#666" />
-
-              {/* Sill */}
-              <rect x="50" y="310" width="200" height="15" fill="#8B7355" />
-
-              {/* Labels */}
-              <text x="260" y="60" fontSize="11" fontFamily="Arial" fill="#2D2D2D" fontWeight="bold">Roller Head</text>
-              <text x="260" y="140" fontSize="11" fontFamily="Arial" fill="#2D2D2D" fontWeight="bold">Shade Fabric</text>
-              <text x="260" y="310" fontSize="11" fontFamily="Arial" fill="#2D2D2D" fontWeight="bold">Hembar</text>
-
-              {/* Motor indicator */}
-              <circle cx="60" cy="55" r="12" fill="none" stroke="#8CC63F" strokeWidth="2" opacity="0.4" />
-              <text x="15" y="60" fontSize="10" fontFamily="Arial" fill="#8CC63F" fontWeight="bold">MOTOR</text>
-            </svg>
           </div>
         </div>
       </div>

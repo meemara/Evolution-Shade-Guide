@@ -1,27 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 export default function MountingOptions() {
-  const sectionRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
   const [activeMount, setActiveMount] = useState('inside');
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section ref={sectionRef} className={`section mounting-options ${isVisible ? 'visible' : ''}`}>
+    <section className="section mounting-options">
       <div className="section-content">
         <h2 className="section-title">Mounting Options</h2>
         <p className="section-subtitle">Choose the right installation method for your space</p>
@@ -44,64 +27,21 @@ export default function MountingOptions() {
         <div className="mount-content">
           {activeMount === 'inside' ? (
             <div className="mount-option">
-              <div className="mount-diagram">
-                <svg viewBox="0 0 300 350" className="diagram-svg">
-                  {/* Window frame */}
-                  <rect x="40" y="50" width="220" height="200" fill="none" stroke="#2D2D2D" strokeWidth="3" />
-
-                  {/* Frame trim */}
-                  <rect x="35" y="45" width="230" height="210" fill="none" stroke="#6D6E71" strokeWidth="2" strokeDasharray="5,5" opacity="0.5" />
-
-                  {/* Window glass */}
-                  <rect x="50" y="60" width="200" height="180" fill="#E8F4FF" opacity="0.4" />
-
-                  {/* Roller head - inside */}
-                  <rect x="50" y="55" width="200" height="18" fill="#555" rx="9" />
-                  <circle cx="60" cy="64" r="6" fill="#8CC63F" />
-                  <circle cx="240" cy="64" r="6" fill="#8CC63F" />
-
-                  {/* Shade fabric */}
-                  <rect x="58" y="73" width="184" height="90" fill="#F5E6D3" opacity="0.8" />
-
-                  {/* Light gaps - left side */}
-                  <line x1="50" y1="75" x2="35" y2="65" stroke="#FFD700" strokeWidth="2" opacity="0.7" />
-                  <line x1="50" y1="100" x2="30" y2="100" stroke="#FFD700" strokeWidth="2" opacity="0.7" />
-                  <line x1="50" y1="140" x2="35" y2="150" stroke="#FFD700" strokeWidth="2" opacity="0.7" />
-
-                  {/* Light gaps - right side */}
-                  <line x1="250" y1="75" x2="265" y2="65" stroke="#FFD700" strokeWidth="2" opacity="0.7" />
-                  <line x1="250" y1="100" x2="270" y2="100" stroke="#FFD700" strokeWidth="2" opacity="0.7" />
-                  <line x1="250" y1="140" x2="265" y2="150" stroke="#FFD700" strokeWidth="2" opacity="0.7" />
-
-                  {/* Light gaps - bottom */}
-                  <line x1="100" y1="163" x2="100" y2="180" stroke="#FFD700" strokeWidth="2" opacity="0.7" />
-                  <line x1="150" y1="163" x2="150" y2="185" stroke="#FFD700" strokeWidth="2" opacity="0.7" />
-                  <line x1="200" y1="163" x2="200" y2="180" stroke="#FFD700" strokeWidth="2" opacity="0.7" />
-
-                  {/* Hembar */}
-                  <rect x="58" y="163" width="184" height="8" fill="#8B7355" />
-
-                  {/* Sill */}
-                  <rect x="50" y="240" width="200" height="15" fill="#8B7355" />
-
-                  {/* Labels */}
-                  <text x="15" y="75" fontSize="10" fontFamily="Arial" fill="#FFD700" fontWeight="bold">Light</text>
-                  <text x="10" y="95" fontSize="10" fontFamily="Arial" fill="#FFD700" fontWeight="bold">Gaps</text>
-
-                  <text x="260" y="75" fontSize="10" fontFamily="Arial" fill="#FFD700" fontWeight="bold">Light</text>
-                  <text x="255" y="95" fontSize="10" fontFamily="Arial" fill="#FFD700" fontWeight="bold">Gaps</text>
-
-                  <text x="110" y="205" fontSize="10" fontFamily="Arial" fill="#FFD700" fontWeight="bold">Light at Bottom</text>
-                </svg>
+              <div className="mount-photo">
+                <img
+                  src="https://www.lutron.com/us/sites/hub_americas/files/styles/cards_short_desktop_medium_2x/public/2024-12/livrm-lascala-1-shades-up.jpg"
+                  alt="Inside mounted shades in a modern living room"
+                />
+                <div className="photo-caption">Inside Mount — shade fits within the window frame</div>
               </div>
 
               <div className="mount-details">
                 <h3>Inside Mount</h3>
-                <p className="highlight-text">Shade fits within the window frame</p>
+                <p className="highlight-text">Clean, minimal aesthetic that showcases your window trim</p>
 
                 <div className="pros-cons">
                   <div className="pros">
-                    <h4>✓ Advantages</h4>
+                    <h4>Advantages</h4>
                     <ul>
                       <li>Clean, minimal aesthetic</li>
                       <li>Shows window trim and frame</li>
@@ -111,11 +51,11 @@ export default function MountingOptions() {
                   </div>
 
                   <div className="cons">
-                    <h4>⚠ Considerations</h4>
+                    <h4>Considerations</h4>
                     <ul>
-                      <li>Light gaps around edges (shown in yellow)</li>
+                      <li>Light gaps around edges</li>
                       <li>Gaps on left, right, and bottom</li>
-                      <li>Solution: use side channels, sill angles, or pocket mounts</li>
+                      <li>Solution: side channels, sill angles, or pocket mounts</li>
                       <li>Frame depth must accommodate roller</li>
                     </ul>
                   </div>
@@ -129,53 +69,23 @@ export default function MountingOptions() {
             </div>
           ) : (
             <div className="mount-option">
-              <div className="mount-diagram">
-                <svg viewBox="0 0 300 350" className="diagram-svg">
-                  {/* Outer wall */}
-                  <rect x="35" y="45" width="230" height="210" fill="#D3D3D3" opacity="0.3" />
-
-                  {/* Window frame */}
-                  <rect x="40" y="50" width="220" height="200" fill="none" stroke="#2D2D2D" strokeWidth="2" />
-
-                  {/* Window glass */}
-                  <rect x="50" y="60" width="200" height="180" fill="#E8F4FF" opacity="0.4" />
-
-                  {/* Roller head - outside, with overlap */}
-                  <rect x="30" y="45" width="240" height="18" fill="#555" rx="9" />
-                  <circle cx="40" cy="54" r="6" fill="#8CC63F" />
-                  <circle cx="260" cy="54" r="6" fill="#8CC63F" />
-
-                  {/* Shade fabric - covers full opening */}
-                  <rect x="35" y="63" width="230" height="105" fill="#F5E6D3" opacity="0.8" />
-
-                  {/* Overlap indicators - green */}
-                  <rect x="30" y="63" width="10" height="105" fill="#8CC63F" opacity="0.4" />
-                  <rect x="260" y="63" width="10" height="105" fill="#8CC63F" opacity="0.4" />
-
-                  {/* Hembar */}
-                  <rect x="35" y="168" width="230" height="8" fill="#8B7355" />
-
-                  {/* Sill */}
-                  <rect x="50" y="240" width="200" height="15" fill="#8B7355" />
-
-                  {/* No light gaps shown - complete coverage */}
-                  <text x="120" y="200" fontSize="12" fontFamily="Arial" fill="#8CC63F" fontWeight="bold">Complete Coverage</text>
-
-                  {/* Overlap labels */}
-                  <text x="32" y="120" fontSize="9" fontFamily="Arial" fill="#8CC63F" fontWeight="bold">Overlap</text>
-                  <text x="267" y="120" fontSize="9" fontFamily="Arial" fill="#8CC63F" fontWeight="bold">Overlap</text>
-                </svg>
+              <div className="mount-photo">
+                <img
+                  src="https://www.lutron.com/us/sites/hub_americas/files/styles/cards_short_desktop_medium_2x/public/2024-12/bedroom-sitting-area-casa-del-ritmo_25B9210.jpg"
+                  alt="Outside mounted shades providing complete light control"
+                />
+                <div className="photo-caption">Outside Mount — shade covers the full window opening</div>
               </div>
 
               <div className="mount-details">
                 <h3>Outside Mount</h3>
-                <p className="highlight-text">Shade mounts on wall/ceiling, covers full opening</p>
+                <p className="highlight-text">Superior light control with complete coverage</p>
 
                 <div className="pros-cons">
                   <div className="pros">
-                    <h4>✓ Advantages</h4>
+                    <h4>Advantages</h4>
                     <ul>
-                      <li>Complete light control (no side gaps)</li>
+                      <li>Complete light control — no side gaps</li>
                       <li>Perfect for blackout applications</li>
                       <li>Covers window frame and trim</li>
                       <li>More sophisticated appearance</li>
@@ -184,12 +94,12 @@ export default function MountingOptions() {
                   </div>
 
                   <div className="cons">
-                    <h4>⚠ Considerations</h4>
+                    <h4>Considerations</h4>
                     <ul>
                       <li>Covers window trim (less visible)</li>
-                      <li>Requires wall/ceiling space</li>
+                      <li>Requires wall or ceiling space</li>
                       <li>Slightly more prominent profile</li>
-                      <li>Light still may leak at bottom</li>
+                      <li>Light may still leak at bottom</li>
                     </ul>
                   </div>
                 </div>

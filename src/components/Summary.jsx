@@ -1,26 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
-export default function Summary() {
-  const sectionRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
+export default function Summary({ onReviewClick }) {
   return (
-    <section ref={sectionRef} className={`section summary ${isVisible ? 'visible' : ''}`}>
+    <section className="section summary">
       <div className="section-content">
         <h2 className="section-title">What to Expect</h2>
         <p className="section-subtitle">Your journey to the perfect motorized shades</p>
@@ -107,6 +89,14 @@ export default function Summary() {
                   <a href="tel:+1-406-555-0100">Call us</a> | <a href="mailto:info@evolution.local">Email us</a>
                 </p>
               </div>
+
+              <button
+                className="begin-button"
+                onClick={onReviewClick}
+                style={{ marginTop: '24px', width: '100%' }}
+              >
+                Review & Send Selections
+              </button>
             </div>
           </div>
         </div>

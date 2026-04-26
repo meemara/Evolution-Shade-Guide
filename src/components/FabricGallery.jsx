@@ -1,36 +1,52 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { FABRICS, getThumbnailUrl, OPACITY_TYPES, COLLECTIONS } from '../data/fabricData';
+import React, { useState } from 'react';
+import { FABRIC_FAMILIES, getFabricImageUrl, getLutronFabricUrl, OPACITY_TYPES, COLLECTIONS } from '../data/fabricData';
+import { FABRIC_COLOR_DATA } from '../data/fabricColorData';
 import { useSelection } from '../context/SelectionContext';
 
+// Component that displays real color variants from scraped Lutron data
+function ColorGrid({ family, onSelectColor, selectedColor }) {
+  const colors = FABRIC_COLOR_DATA[family.name] || [];
+
+  if (colors.length === 0) return null;
+
+  return (
+    <div className="color-probe-section">
+      <h4 className="color-probe-title">
+        Available Colors
+        <span className="color-count-label"> ({colors.length})</span>
+      </h4>
+      <div className="color-swatch-grid">
+        {colors.map(c => (
+          <div
+            key={c.sku}
+            className={`color-swatch-item ${selectedColor?.sku === c.sku ? 'active' : ''}`}
+            onClick={() => onSelectColor({ name: c.color, sku: c.sku })}
+            title={`${c.color} — ${c.sku}`}
+          >
+            <div className="color-swatch-thumb">
+              <img src={getFabricImageUrl(c.sku)} alt={c.color} loading="lazy" />
+            </div>
+            <span className="color-swatch-name">{c.color}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function FabricGallery() {
-  const sectionRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
   const [selectedOpacity, setSelectedOpacity] = useState(null);
   const [selectedCollection, setSelectedCollection] = useState(null);
-  const [selectedFabric, setSelectedFabric] = useState(null);
+  const [selectedFamily, setSelectedFamily] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
   const [showRoomSelector, setShowRoomSelector] = useState(false);
   const [selectedRoomId, setSelectedRoomId] = useState(null);
   const [newRoomName, setNewRoomName] = useState('');
 
   const { rooms, addRoom, addFabricToRoom } = useSelection();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  // Filter fabrics
-  let filtered = FABRICS;
+  // Filter families
+  let filtered = FABRIC_FAMILIES;
 
   if (selectedOpacity) {
     filtered = filtered.filter(f => f.type === selectedOpacity);
@@ -46,159 +62,184 @@ export default function FabricGallery() {
   };
 
   const handleAddToRoom = () => {
-    if (selectedRoomId) {
-      addFabricToRoom(selectedRoomId, selectedFabric);
+    if (selectedRoomId && selectedFamily) {
+      addFabricToRoom(selectedRoomId, {
+        ...selectedFamily,
+        family: selectedFamily.name,
+        color: selectedColor?.name || '',
+        sku: selectedColor?.sku || selectedFamily.sku,
+        opacity: selectedFamily.type,
+      });
       setShowRoomSelector(false);
       setSelectedRoomId(null);
-      setSelectedFabric(null);
+      setSelectedFamily(null);
+      setSelectedColor(null);
     }
   };
 
   const handleCreateNewRoom = () => {
-    if (newRoomName.trim()) {
+    if (newRoomName.trim() && selectedFamily) {
       const roomId = addRoom(newRoomName);
-      addFabricToRoom(roomId, selectedFabric);
+      addFabricToRoom(roomId, {
+        ...selectedFamily,
+        family: selectedFamily.name,
+        color: selectedColor?.name || '',
+        sku: selectedColor?.sku || selectedFamily.sku,
+        opacity: selectedFamily.type,
+      });
       setShowRoomSelector(false);
       setSelectedRoomId(null);
       setNewRoomName('');
-      setSelectedFabric(null);
+      setSelectedFamily(null);
+      setSelectedColor(null);
+    }
+  };
+
+  const getTypeLabel = (type) => {
+    switch (type) {
+      case 'sheer': return 'Sheer / Solar Screen';
+      case 'translucent': return 'Light Filtering';
+      case 'roomdarkening': return 'Room Darkening';
+      case 'blackout': return 'Blackout';
+      default: return type;
     }
   };
 
   return (
-    <section ref={sectionRef} className={`section fabric-gallery ${isVisible ? 'visible' : ''}`}>
+    <section className="section fabric-gallery">
       <div className="section-content">
         <h2 className="section-title">Fabric Gallery</h2>
-        <p className="section-subtitle">Explore 80+ premium fabrics across multiple collections</p>
+        <p className="section-subtitle">Explore our curated selection of Lutron roller shade fabrics</p>
 
-        <div className="gallery-filters">
-          <div className="filter-group">
-            <h4>Filter by Opacity</h4>
-            <div className="filter-buttons">
-              {OPACITY_TYPES.map(opType => (
-                <button
-                  key={opType.key}
-                  className={`filter-btn ${selectedOpacity === opType.key ? 'active' : ''}`}
-                  onClick={() => setSelectedOpacity(selectedOpacity === opType.key ? null : opType.key)}
-                >
-                  {opType.label}
-                </button>
-              ))}
+        <div className="fabric-filter-bar">
+          <div className="filter-row">
+            <div className="filter-group-inline">
+              <span className="filter-label">Opacity:</span>
+              <div className="filter-pills">
+                {OPACITY_TYPES.map(opType => (
+                  <button
+                    key={opType.key}
+                    className={`filter-pill ${selectedOpacity === opType.key ? 'active' : ''}`}
+                    onClick={() => setSelectedOpacity(selectedOpacity === opType.key ? null : opType.key)}
+                  >
+                    {opType.label}
+                  </button>
+                ))}
+              </div>
             </div>
+
+            <div className="filter-group-inline">
+              <span className="filter-label">Collection:</span>
+              <div className="filter-pills">
+                {COLLECTIONS.map(col => (
+                  <button
+                    key={col}
+                    className={`filter-pill ${selectedCollection === col ? 'active' : ''}`}
+                    onClick={() => setSelectedCollection(selectedCollection === col ? null : col)}
+                  >
+                    {col.charAt(0).toUpperCase() + col.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {(selectedOpacity || selectedCollection) && (
+              <button className="filter-clear" onClick={handleReset}>
+                Clear Filters
+              </button>
+            )}
           </div>
 
-          <div className="filter-group">
-            <h4>Filter by Collection</h4>
-            <div className="filter-buttons">
-              {COLLECTIONS.map(col => (
-                <button
-                  key={col}
-                  className={`filter-btn ${selectedCollection === col ? 'active' : ''}`}
-                  onClick={() => setSelectedCollection(selectedCollection === col ? null : col)}
-                >
-                  {col.charAt(0).toUpperCase() + col.slice(1)}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {(selectedOpacity || selectedCollection) && (
-            <button className="reset-filters" onClick={handleReset}>
-              Reset Filters
-            </button>
-          )}
+          <p className="fabric-results-count">
+            {filtered.length} fabric {filtered.length !== 1 ? 'families' : 'family'}
+          </p>
         </div>
 
-        <p className="results-count">
-          Showing {filtered.length} fabric{filtered.length !== 1 ? 's' : ''}
-        </p>
-
-        <div className="fabric-grid">
-          {filtered.map(fabric => (
+        <div className="fabric-family-grid">
+          {filtered.map(family => (
             <div
-              key={fabric.sku}
-              className="fabric-card"
-              onClick={() => setSelectedFabric(fabric)}
+              key={family.sku}
+              className="fabric-family-card"
+              onClick={() => setSelectedFamily(family)}
             >
-              <div className="fabric-thumbnail-wrapper">
+              <div className="fabric-family-image">
                 <img
-                  src={getThumbnailUrl(fabric.sku)}
-                  alt={`${fabric.family} - ${fabric.color}`}
-                  className="fabric-thumbnail"
-                  onError={(e) => {
-                    e.target.style.backgroundColor = '#E5E5E5';
-                    e.target.style.display = 'none';
-                  }}
+                  src={getFabricImageUrl(family.sku)}
+                  alt={family.name}
+                  loading="lazy"
                 />
               </div>
-              <div className="fabric-info">
-                <p className="fabric-family">{fabric.family}</p>
-                <p className="fabric-color">{fabric.color}</p>
-                <p className="fabric-opacity">{fabric.opacity}</p>
+              <div className="fabric-family-info">
+                <h3 className="fabric-family-name">{family.name}</h3>
+                <span className="fabric-family-count">{family.count} fabrics</span>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Fabric Detail Modal */}
-        {selectedFabric && (
-          <div className="fabric-modal" onClick={() => setSelectedFabric(null)}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <button className="modal-close" onClick={() => setSelectedFabric(null)}>
+        {/* Fabric Family Detail Modal */}
+        {selectedFamily && (
+          <div className="fabric-modal" onClick={() => { setSelectedFamily(null); setShowRoomSelector(false); setSelectedColor(null); }}>
+            <div className="fabric-detail-modal" onClick={(e) => e.stopPropagation()}>
+              <button className="modal-close" onClick={() => { setSelectedFamily(null); setShowRoomSelector(false); setSelectedColor(null); }}>
                 ✕
               </button>
 
-              <div className="modal-body">
-                <div className="modal-image">
+              <div className="fabric-detail-layout">
+                <div className="fabric-detail-image">
                   <img
-                    src={getThumbnailUrl(selectedFabric.sku)}
-                    alt={`${selectedFabric.family} - ${selectedFabric.color}`}
+                    src={getFabricImageUrl(selectedColor?.sku || selectedFamily.sku)}
+                    alt={selectedColor ? `${selectedFamily.name} — ${selectedColor.name}` : selectedFamily.name}
                     onError={(e) => {
                       e.target.style.backgroundColor = '#E5E5E5';
                     }}
                   />
+                  {selectedColor && (
+                    <div className="selected-color-label">{selectedColor.name}</div>
+                  )}
                 </div>
 
-                <div className="modal-info">
-                  <h3>{selectedFabric.family}</h3>
-                  <p className="modal-color-name">{selectedFabric.color}</p>
+                <div className="fabric-detail-info">
+                  <h3>{selectedFamily.name}</h3>
+                  <p className="fabric-detail-count">
+                    {(FABRIC_COLOR_DATA[selectedFamily.name] || []).length || selectedFamily.count} colors available
+                  </p>
 
-                  <div className="modal-specs">
-                    <div className="spec">
-                      <span className="spec-label">SKU:</span>
-                      <span className="spec-value">{selectedFabric.sku}</span>
+                  <div className="fabric-detail-specs">
+                    <div className="detail-spec">
+                      <span className="detail-spec-label">Light Control</span>
+                      <span className="detail-spec-value">{getTypeLabel(selectedFamily.type)}</span>
                     </div>
-                    <div className="spec">
-                      <span className="spec-label">Light Transmission:</span>
-                      <span className="spec-value">{selectedFabric.opacity}</span>
-                    </div>
-                    <div className="spec">
-                      <span className="spec-label">Collection:</span>
-                      <span className="spec-value">
-                        {selectedFabric.collection.charAt(0).toUpperCase() + selectedFabric.collection.slice(1)}
+                    <div className="detail-spec">
+                      <span className="detail-spec-label">Collection</span>
+                      <span className="detail-spec-value">
+                        {selectedFamily.collection.charAt(0).toUpperCase() + selectedFamily.collection.slice(1)}
                       </span>
                     </div>
-                    <div className="spec">
-                      <span className="spec-label">Type:</span>
-                      <span className="spec-value">
-                        {selectedFabric.type === 'sheer' && 'Sheer'}
-                        {selectedFabric.type === 'translucent' && 'Translucent'}
-                        {selectedFabric.type === 'roomdarkening' && 'Room Darkening'}
-                        {selectedFabric.type === 'blackout' && 'Blackout'}
-                      </span>
+                    <div className="detail-spec">
+                      <span className="detail-spec-label">SKU</span>
+                      <span className="detail-spec-value">{selectedColor?.sku || selectedFamily.sku}</span>
                     </div>
                   </div>
 
-                  <div className="modal-description">
-                    <p>
-                      This elegant fabric is part of our curated collection, selected for quality, durability,
-                      and aesthetic appeal. Each fabric is tested for light control performance and fade resistance.
-                    </p>
-                  </div>
+                  <ColorGrid
+                    family={selectedFamily}
+                    onSelectColor={setSelectedColor}
+                    selectedColor={selectedColor}
+                  />
+
+                  <a
+                    href={getLutronFabricUrl(selectedFamily)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="lutron-link-btn"
+                  >
+                    View All Colors on Lutron
+                  </a>
 
                   {!showRoomSelector ? (
-                    <button className="modal-request-btn add-to-room-btn" onClick={() => setShowRoomSelector(true)}>
-                      Add to Room
+                    <button className="fabric-add-btn" onClick={() => setShowRoomSelector(true)}>
+                      {selectedColor ? `Add ${selectedColor.name} to Room` : 'Add to Room'}
                     </button>
                   ) : (
                     <div className="room-selector-panel">

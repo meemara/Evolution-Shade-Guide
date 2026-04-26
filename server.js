@@ -1,7 +1,6 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import nodemailer from 'nodemailer';
 import PDFDocument from 'pdfkit';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -13,16 +12,77 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static(join(__dirname, 'dist')));
 
-// Configure email transporter
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: process.env.SMTP_PORT || 587,
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+// --- Microsoft Graph API Email ---
+const AZURE_TENANT_ID = process.env.AZURE_TENANT_ID;
+const AZURE_CLIENT_ID = process.env.AZURE_CLIENT_ID;
+const AZURE_CLIENT_SECRET = process.env.AZURE_CLIENT_SECRET;
+const MAIL_SENDER = process.env.MAIL_SENDER || 'mmeece@evolutionava.com';
+
+let graphToken = null;
+let tokenExpiry = 0;
+
+async function getGraphToken() {
+  // Return cached token if still valid (with 5-min buffer)
+  if (graphToken && Date.now() < tokenExpiry - 300000) {
+    return graphToken;
+  }
+
+  const tokenUrl = `https://login.microsoftonline.com/${AZURE_TENANT_ID}/oauth2/v2.0/token`;
+  const body = new URLSearchParams({
+    client_id: AZURE_CLIENT_ID,
+    client_secret: AZURE_CLIENT_SECRET,
+    scope: 'https://graph.microsoft.com/.default',
+    grant_type: 'client_credentials',
+  });
+
+  const resp = await fetch(tokenUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: body.toString(),
+  });
+
+  if (!resp.ok) {
+    const errText = await resp.text();
+    throw new Error(`Token request failed (${resp.status}): ${errText}`);
+  }
+
+  const data = await resp.json();
+  graphToken = data.access_token;
+  tokenExpiry = Date.now() + data.expires_in * 1000;
+  return graphToken;
+}
+
+async function sendMailViaGraph({ to, subject, htmlBody }) {
+  const token = await getGraphToken();
+
+  const message = {
+    message: {
+      subject,
+      body: { contentType: 'HTML', content: htmlBody },
+      toRecipients: to.map(email => ({
+        emailAddress: { address: email },
+      })),
+    },
+    saveToSentItems: false,
+  };
+
+  const resp = await fetch(
+    `https://graph.microsoft.com/v1.0/users/${MAIL_SENDER}/sendMail`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    }
+  );
+
+  if (!resp.ok) {
+    const errText = await resp.text();
+    throw new Error(`Graph sendMail failed (${resp.status}): ${errText}`);
+  }
+}
 
 // Generate PDF endpoint
 app.post('/api/generate-pdf', (req, res) => {
@@ -158,12 +218,11 @@ app.post('/api/send-selections', async (req, res) => {
       </div>
     `;
 
-    // Send email
-    await transporter.sendMail({
-      from: process.env.SMTP_FROM || 'Evolution AV <noreply@evolutionava.com>',
-      to: recipients.join(', '),
+    // Send via Microsoft Graph API
+    await sendMailViaGraph({
+      to: recipients,
       subject: `Shade Selection Summary${projectName ? ` - ${projectName}` : ''}`,
-      html: htmlBody,
+      htmlBody,
     });
 
     res.json({ success: true, message: `Email sent to ${recipients.length} recipient(s)` });
@@ -171,6 +230,69 @@ app.post('/api/send-selections', async (req, res) => {
     console.error('Email sending error:', error);
     res.status(500).json({ message: 'Failed to send email: ' + error.message });
   }
+});
+
+// Fabric image proxy — fetches from assets.lutron.com CDN and caches in memory
+const fabricImageCache = new Map();
+
+app.get('/api/fabric-image/:sku', async (req, res) => {
+  const sku = req.params.sku.toLowerCase();
+  const cacheKey = sku;
+
+  // Serve from cache if available
+  if (fabricImageCache.has(cacheKey)) {
+    const cached = fabricImageCache.get(cacheKey);
+    res.set('Content-Type', cached.type);
+    res.set('Cache-Control', 'public, max-age=604800');
+    return res.send(cached.buffer);
+  }
+
+  // Try multiple URL patterns — Lutron uses assets.lutron.com CDN
+  const urlPatterns = [
+    `https://assets.lutron.com/a/images/fabrics/fabric_thumbnail_image_${sku}_1.jpg`,
+    `https://assets.lutron.com/a/images/fabrics/fabric_thumbnail_image_${sku}_1.png`,
+    `https://www.lutronfabrics.com/a/images/fabrics/fabric_thumbnail_image_${sku}_1.jpg`,
+  ];
+
+  for (const imgUrl of urlPatterns) {
+    try {
+      const resp = await fetch(imgUrl, {
+        headers: {
+          'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Referer': 'https://www.lutronfabrics.com/',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        },
+        redirect: 'follow',
+      });
+
+      if (resp.ok) {
+        const contentType = resp.headers.get('content-type') || 'image/jpeg';
+        const buffer = Buffer.from(await resp.arrayBuffer());
+
+        // Only cache if we got actual image data (not an error page)
+        if (buffer.length > 500) {
+          fabricImageCache.set(cacheKey, { buffer, type: contentType });
+          res.set('Content-Type', contentType);
+          res.set('Cache-Control', 'public, max-age=604800');
+          return res.send(buffer);
+        }
+      }
+    } catch (err) {
+      console.error(`Proxy fetch failed for ${imgUrl}:`, err.message);
+    }
+  }
+
+  // Return a placeholder SVG if all attempts fail
+  const placeholderSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="366" height="275" viewBox="0 0 366 275">
+    <rect width="366" height="275" fill="#E8E8E8"/>
+    <text x="183" y="130" text-anchor="middle" font-family="Arial" font-size="14" fill="#999">Fabric Texture</text>
+    <text x="183" y="150" text-anchor="middle" font-family="Arial" font-size="11" fill="#BBB">${sku.toUpperCase()}</text>
+  </svg>`;
+
+  res.set('Content-Type', 'image/svg+xml');
+  res.set('Cache-Control', 'public, max-age=3600');
+  res.send(placeholderSvg);
 });
 
 // SPA fallback

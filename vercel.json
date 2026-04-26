@@ -1,0 +1,8 @@
+{
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/api/generate-pdf", "destination": "/api/generate-pdf" },
+    { "source": "/api/send-selections", "destination": "/api/send-selections" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
